@@ -1,0 +1,31 @@
+CREATE TABLE mentors (
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  phone VARCHAR(20) NOT NULL,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE students (
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  phone VARCHAR(20) NOT NULL,
+  mentor_id INT,
+  evaluated_by INT,
+  PRIMARY KEY (id),
+  FOREIGN KEY (mentor_id) REFERENCES mentors(id),
+  FOREIGN KEY (evaluated_by) REFERENCES mentors(id)
+);
+
+CREATE TABLE student_marks (
+  id INT NOT NULL AUTO_INCREMENT,
+  student_id INT NOT NULL,
+  idea_marks INT NOT NULL,
+  execution_marks INT NOT NULL,
+  presentation_marks INT NOT NULL,
+  communication_marks INT NOT NULL,
+  total_marks INT AS (idea_marks + execution_marks + presentation_marks + communication_marks) STORED,
+  PRIMARY KEY (id),
+  FOREIGN KEY (student_id) REFERENCES students(id)
+);
